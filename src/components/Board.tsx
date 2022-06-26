@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import AgendaCard from './AgendaCard';
 import Sidebar from './Sidebar';
 
-interface Agenda {
+export interface Agenda {
   title: string;
   description: string;
   status: string;
@@ -10,19 +10,21 @@ interface Agenda {
 }
 
 const Board = () => {
-  const [agendas, setAgendas] = useState<Agenda[]>([
-    // test data:
-    {
-      title: 'Status Meeting',
-      description: 'A meeting to discuss the current status of things',
-      status: 'Confirmed',
-      dateTime: new Date('2022-06-27 12:00'),
-    },
-  ]);
+  const [agendas, setAgendas] = useState<Agenda[]>([]);
+
+  const createAgenda = (agenda: Agenda) => {
+    const updatedAgendasSortedByDate = [...agendas, agenda].sort((a, b) => {
+      if (a.dateTime < b.dateTime) return -1;
+      if (a.dateTime > b.dateTime) return 1;
+      return 0;
+    });
+
+    setAgendas(updatedAgendasSortedByDate);
+  };
 
   return (
     <div>
-      <Sidebar />
+      <Sidebar createAgenda={createAgenda} />
       <div>
         {agendas.map((agenda, index) => (
           <AgendaCard
