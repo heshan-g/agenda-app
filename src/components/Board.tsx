@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import AgendaCard from './AgendaCard';
 import Header from './Header';
 import { Typography } from '@mui/material';
+import { ExportToCsv } from 'export-to-csv';
 
 export interface Agenda {
   title: string;
@@ -38,12 +39,26 @@ const Board = () => {
     setAgendas(updatedAgendas);
   };
 
+  const exportAgendas = () => {
+    const csvExporter = new ExportToCsv({
+      fieldSeparator: ',',
+      quoteStrings: '"',
+      decimalSeparator: '.',
+      showLabels: true,
+      useTextFile: false,
+      useBom: true,
+      useKeysAsHeaders: true,
+    });
+
+    csvExporter.generateCsv(agendas);
+  };
+
   let dateGroup: string;
   let showDateGroup: boolean = true;
 
   return (
     <div>
-      <Header createAgenda={createAgenda} />
+      <Header createAgenda={createAgenda} exportAgendas={exportAgendas} />
       <div style={{ marginTop: '50px' }}>
         {agendas.map((agenda, index) => {
           if (agenda.dateTime.toDateString() !== dateGroup) {

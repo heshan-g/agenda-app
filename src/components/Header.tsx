@@ -5,9 +5,10 @@ import { Grid, Button } from '@mui/material';
 
 interface HeaderProps {
   createAgenda: (agenda: Agenda) => void;
+  exportAgendas: () => void;
 }
 
-const Header = ({ createAgenda }: HeaderProps) => {
+const Header = ({ createAgenda, exportAgendas }: HeaderProps) => {
   const [showCreateAgendaModal, setShowCreateAgendaModal] = useState(false);
 
   const openModal = () => setShowCreateAgendaModal(true);
@@ -18,7 +19,7 @@ const Header = ({ createAgenda }: HeaderProps) => {
       <Grid container justifyContent='space-between' spacing={2}>
         <Grid item>
           <Button variant='outlined'>Import</Button>
-          <Button onClick={() => {}} sx={{ ml: 2 }} variant='outlined'>
+          <Button onClick={exportAgendas} sx={{ ml: 2 }} variant='outlined'>
             Export
           </Button>
         </Grid>
