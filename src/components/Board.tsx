@@ -22,6 +22,14 @@ const Board = () => {
     setAgendas(updatedAgendasSortedByDate);
   };
 
+  const deleteAgenda = (index: number) => {
+    const updatedAgendas = [...agendas].filter(
+      (agenda, agendaIndex) => agendaIndex !== index
+    );
+
+    setAgendas(updatedAgendas);
+  };
+
   return (
     <div>
       <Sidebar createAgenda={createAgenda} />
@@ -29,10 +37,12 @@ const Board = () => {
         {agendas.map((agenda, index) => (
           <AgendaCard
             key={index}
+            index={index}
             title={agenda.title}
             description={agenda.description}
             status={agenda.status}
             dateTime={agenda.dateTime}
+            deleteAgenda={deleteAgenda}
           />
         ))}
       </div>
