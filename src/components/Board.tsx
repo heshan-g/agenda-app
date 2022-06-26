@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import AgendaCard from './AgendaCard';
 import Sidebar from './Sidebar';
+import { Typography } from '@mui/material';
 
 export interface Agenda {
   title: string;
@@ -37,22 +38,41 @@ const Board = () => {
     setAgendas(updatedAgendas);
   };
 
+  let dateGroup: string;
+  let showDateGroup: boolean = true;
+
   return (
     <div>
       <Sidebar createAgenda={createAgenda} />
-      <div>
-        {agendas.map((agenda, index) => (
-          <AgendaCard
-            key={index}
-            index={index}
-            title={agenda.title}
-            description={agenda.description}
-            status={agenda.status}
-            dateTime={agenda.dateTime}
-            updateAgenda={updateAgenda}
-            deleteAgenda={deleteAgenda}
-          />
-        ))}
+      <div style={{ marginTop: '50px' }}>
+        {agendas.map((agenda, index) => {
+          if (agenda.dateTime.toDateString() !== dateGroup) {
+            dateGroup = agenda.dateTime.toDateString();
+            showDateGroup = true;
+          } else if (showDateGroup) {
+            showDateGroup = false;
+          }
+
+          return (
+            <div>
+              {showDateGroup && (
+                <Typography variant='h4' component='div'>
+                  {agenda.dateTime.toDateString()}
+                </Typography>
+              )}
+              <AgendaCard
+                key={index}
+                index={index}
+                title={agenda.title}
+                description={agenda.description}
+                status={agenda.status}
+                dateTime={agenda.dateTime}
+                updateAgenda={updateAgenda}
+                deleteAgenda={deleteAgenda}
+              />
+            </div>
+          );
+        })}
       </div>
     </div>
   );
