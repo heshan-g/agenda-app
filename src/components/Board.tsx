@@ -30,6 +30,13 @@ const Board = () => {
     setAgendas(updatedAgendas);
   };
 
+  const updateAgenda = (index: number, newAgenda: Agenda) => {
+    const updatedAgendas = [...agendas];
+    updatedAgendas[index] = newAgenda;
+
+    setAgendas(updatedAgendas);
+  };
+
   return (
     <div>
       <Sidebar createAgenda={createAgenda} />
@@ -42,6 +49,7 @@ const Board = () => {
             description={agenda.description}
             status={agenda.status}
             dateTime={agenda.dateTime}
+            updateAgenda={updateAgenda}
             deleteAgenda={deleteAgenda}
           />
         ))}
