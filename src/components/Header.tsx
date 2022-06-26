@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import CreateAgendaModal from './CreateAgendaModal';
 import { Agenda } from './Board';
+import { Grid, Button } from '@mui/material';
 
-interface SidebarProps {
+interface HeaderProps {
   createAgenda: (agenda: Agenda) => void;
 }
 
-const Sidebar = ({ createAgenda }: SidebarProps) => {
+const Header = ({ createAgenda }: HeaderProps) => {
   const [showCreateAgendaModal, setShowCreateAgendaModal] = useState(false);
 
   const openModal = () => setShowCreateAgendaModal(true);
@@ -14,9 +15,19 @@ const Sidebar = ({ createAgenda }: SidebarProps) => {
 
   return (
     <div>
-      <button onClick={openModal}>+ New</button>
-      <button>Import</button>
-      <button>Export</button>
+      <Grid container justifyContent='space-between' spacing={2}>
+        <Grid item>
+          <Button variant='outlined'>Import</Button>
+          <Button onClick={() => {}} sx={{ ml: 2 }} variant='outlined'>
+            Export
+          </Button>
+        </Grid>
+        <Grid item>
+          <Button variant='contained' onClick={openModal}>
+            + New
+          </Button>
+        </Grid>
+      </Grid>
 
       {showCreateAgendaModal && (
         <CreateAgendaModal
@@ -29,4 +40,4 @@ const Sidebar = ({ createAgenda }: SidebarProps) => {
   );
 };
 
-export default Sidebar;
+export default Header;

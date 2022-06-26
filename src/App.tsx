@@ -5,7 +5,7 @@ import Board from './components/Board';
 
 const App = () => {
   return (
-    <Container maxWidth='sm'>
+    <Container maxWidth='lg'>
       <Box sx={{ my: 4 }}>
         <Board />
       </Box>

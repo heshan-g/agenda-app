@@ -1,6 +1,15 @@
 import React, { useState } from 'react';
 import UpdateAgendaModal from './UpdateAgendaModal';
 import { Agenda } from './Board';
+import {
+  Button,
+  Card,
+  CardContent,
+  CardActions,
+  Chip,
+  Grid,
+  Typography,
+} from '@mui/material';
 
 interface AgendaCardProps {
   index: number;
@@ -26,14 +35,61 @@ const AgendaCard = ({
   const openModal = () => setShowUpdateAgendaModal(true);
   const closeModal = () => setShowUpdateAgendaModal(false);
 
+  const getStatusColor = (status: string) => {
+    switch (status) {
+      case 'Tentative':
+        return 'primary';
+
+      case 'Confirmed':
+        return 'success';
+
+      case 'Cancelled':
+        return 'error';
+
+      default:
+        return 'primary';
+    }
+  };
+
   return (
-    <div>
-      <h1>{title}</h1>
-      <div>{description}</div>
-      <div>Status: {status}</div>
-      <div>Date/Time: {dateTime.toString()}</div>
-      <button onClick={openModal}>Update</button>
-      <button onClick={() => deleteAgenda(index)}>Delete</button>
+    <>
+      <Card sx={{ minWidth: 275, my: 4 }} variant='outlined'>
+        <CardContent>
+          <Grid container justifyContent='space-between' spacing={2}>
+            <Grid item>
+              <Typography
+                sx={{ fontSize: 14 }}
+                color='text.secondary'
+                gutterBottom
+              >
+                {dateTime.toString()}
+              </Typography>
+            </Grid>
+            <Grid item>
+              <Chip label={status} color={getStatusColor(status)} />
+            </Grid>
+          </Grid>
+
+          <Typography variant='h5' component='div'>
+            {title}
+          </Typography>
+
+          <Typography variant='body2'>{description}</Typography>
+        </CardContent>
+        <CardActions>
+          <Button variant='outlined' onClick={openModal} size='small'>
+            Edit
+          </Button>
+          <Button
+            variant='outlined'
+            onClick={() => deleteAgenda(index)}
+            size='small'
+            color='error'
+          >
+            Delete
+          </Button>
+        </CardActions>
+      </Card>
 
       {showUpdateAgendaModal && (
         <UpdateAgendaModal
@@ -44,7 +100,7 @@ const AgendaCard = ({
           updateAgenda={updateAgenda}
         />
       )}
-    </div>
+    </>
   );
 };
 

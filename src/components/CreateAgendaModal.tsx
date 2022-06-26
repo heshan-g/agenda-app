@@ -114,7 +114,7 @@ const CreateAgendaModal = ({
             </FormControl>
 
             <FormControl sx={{ mt: 2 }}>
-              <Button onClick={handleSubmit} variant='outlined'>
+              <Button onClick={handleSubmit} variant='contained'>
                 Create Agenda
               </Button>
             </FormControl>

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import AgendaCard from './AgendaCard';
-import Sidebar from './Sidebar';
+import Header from './Header';
 import { Typography } from '@mui/material';
 
 export interface Agenda {
@@ -43,7 +43,7 @@ const Board = () => {
 
   return (
     <div>
-      <Sidebar createAgenda={createAgenda} />
+      <Header createAgenda={createAgenda} />
       <div style={{ marginTop: '50px' }}>
         {agendas.map((agenda, index) => {
           if (agenda.dateTime.toDateString() !== dateGroup) {
