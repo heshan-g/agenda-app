@@ -2,29 +2,36 @@ import React, { useState } from 'react';
 import CreateAgendaModal from './CreateAgendaModal';
 import { Agenda } from './Board';
 import { Grid, Button } from '@mui/material';
+import ImportAgendasModal from './ImportAgendasModal';
 
 interface HeaderProps {
-  createAgenda: (agenda: Agenda) => void;
+  createAgendas: (agendas: Agenda[]) => void;
   exportAgendas: () => void;
 }
 
-const Header = ({ createAgenda, exportAgendas }: HeaderProps) => {
+const Header = ({ createAgendas, exportAgendas }: HeaderProps) => {
   const [showCreateAgendaModal, setShowCreateAgendaModal] = useState(false);
+  const [showImportModal, setShowImportModal] = useState(false);
 
-  const openModal = () => setShowCreateAgendaModal(true);
-  const closeModal = () => setShowCreateAgendaModal(false);
+  const openCreateModal = () => setShowCreateAgendaModal(true);
+  const closeCreateModal = () => setShowCreateAgendaModal(false);
+
+  const openImportModal = () => setShowImportModal(true);
+  const closeImportModal = () => setShowImportModal(false);
 
   return (
     <div>
       <Grid container justifyContent='space-between' spacing={2}>
         <Grid item>
-          <Button variant='outlined'>Import</Button>
+          <Button onClick={openImportModal} variant='outlined'>
+            Import
+          </Button>
           <Button onClick={exportAgendas} sx={{ ml: 2 }} variant='outlined'>
             Export
           </Button>
         </Grid>
         <Grid item>
-          <Button variant='contained' onClick={openModal}>
+          <Button variant='contained' onClick={openCreateModal}>
             + New
           </Button>
         </Grid>
@@ -33,8 +40,16 @@ const Header = ({ createAgenda, exportAgendas }: HeaderProps) => {
       {showCreateAgendaModal && (
         <CreateAgendaModal
           isOpen={showCreateAgendaModal}
-          closeModal={closeModal}
-          createAgenda={createAgenda}
+          closeModal={closeCreateModal}
+          createAgendas={createAgendas}
+        />
+      )}
+
+      {showImportModal && (
+        <ImportAgendasModal
+          isOpen={showImportModal}
+          closeModal={closeImportModal}
+          createAgendas={createAgendas}
         />
       )}
     </div>

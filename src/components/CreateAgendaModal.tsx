@@ -30,13 +30,13 @@ const style = {
 interface CreateAgendaModalProps {
   isOpen: boolean;
   closeModal: () => void;
-  createAgenda: (agenda: Agenda) => void;
+  createAgendas: (agendas: Agenda[]) => void;
 }
 
 const CreateAgendaModal = ({
   isOpen,
   closeModal,
-  createAgenda,
+  createAgendas,
 }: CreateAgendaModalProps) => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
@@ -44,12 +44,14 @@ const CreateAgendaModal = ({
   const [dateTime, setDateTime] = useState(new Date());
 
   const handleSubmit = () => {
-    createAgenda({
-      title,
-      description,
-      status,
-      dateTime,
-    });
+    createAgendas([
+      {
+        title,
+        description,
+        status,
+        dateTime,
+      },
+    ]);
 
     closeModal();
   };

@@ -14,12 +14,14 @@ export interface Agenda {
 const Board = () => {
   const [agendas, setAgendas] = useState<Agenda[]>([]);
 
-  const createAgenda = (agenda: Agenda) => {
-    const updatedAgendasSortedByDate = [...agendas, agenda].sort((a, b) => {
-      if (a.dateTime < b.dateTime) return -1;
-      if (a.dateTime > b.dateTime) return 1;
-      return 0;
-    });
+  const createAgendas = (newAgendas: Agenda[]) => {
+    const updatedAgendasSortedByDate = [...agendas, ...newAgendas].sort(
+      (a, b) => {
+        if (a.dateTime < b.dateTime) return -1;
+        if (a.dateTime > b.dateTime) return 1;
+        return 0;
+      }
+    );
 
     setAgendas(updatedAgendasSortedByDate);
   };
@@ -58,7 +60,7 @@ const Board = () => {
 
   return (
     <div>
-      <Header createAgenda={createAgenda} exportAgendas={exportAgendas} />
+      <Header createAgendas={createAgendas} exportAgendas={exportAgendas} />
       <div style={{ marginTop: '50px' }}>
         {agendas.map((agenda, index) => {
           if (agenda.dateTime.toDateString() !== dateGroup) {
